@@ -169,7 +169,8 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         if(moveInput != Vector2.zero)
         {
-            Instantiate(dust, ty.position, Quaternion.identity);
+            GameObject temp = Instantiate(dust, ty.position, Quaternion.identity);
+            Destroy(temp, 3f);
         }
         StartCoroutine(DustLoop());
     }
