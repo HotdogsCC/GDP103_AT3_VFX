@@ -6,6 +6,7 @@ public class MovingPlatform : MonoBehaviour
 {
     private bool move = false; //Used for controlling when the platform should move
     [SerializeField] private Transform target; //Target position the platform should move towards
+    [SerializeField] private GameObject rocket; //rocket particles
 
     //Sets player as child of platform when stood on
     private void OnTriggerEnter(Collider other)
@@ -15,6 +16,8 @@ public class MovingPlatform : MonoBehaviour
             Transform character = other.transform.parent;
             character.SetParent(transform);
             move = true;
+            rocket.SetActive(true); //turns on particles
+            FindObjectOfType<Animator>().SetTrigger("slip");//makes player slip
         }
     }
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
@@ -11,6 +12,8 @@ public class Player : MonoBehaviour
     private Vector2 lookInput;
     private CharacterController characterController;
     [SerializeField] private GameObject camPivot;
+    [SerializeField] private GameObject dust;
+    [SerializeField] private Transform ty;
 
     private Vector2 moveVector = new Vector2(0, 0);
     private float yVel = 0f;
@@ -31,7 +34,9 @@ public class Player : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         characterController = GetComponentInChildren<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
-        
+
+        //starts footsteps
+        StartCoroutine(DustLoop());
     }
 
     // Update is called once per frame
@@ -159,5 +164,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    private IEnumerator DustLoop()
+    {
+        yield return new WaitForSeconds(0.2f);
+        if(moveInput != Vector2.zero)
+        {
+            Instantiate(dust, ty.position, Quaternion.identity);
+        }
+        StartCoroutine(DustLoop());
+    }
 
 }
